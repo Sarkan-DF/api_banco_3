@@ -3,7 +3,7 @@ import * as dotenv from "dotenv";
 import { userRoutes } from "./routes/user.routes";
 import cors from "cors";
 import "reflect-metadata";
-import { Database } from "./database/config/database.conection";
+import { Database } from "./main/config/database.conection";
 
 dotenv.config();
 

@@ -1,5 +1,5 @@
 import { Entity } from "typeorm";
-import { Database } from "../database/config/database.conection";
+import { Database } from "../main/config/database.conection";
 import { UserEntity } from "../database/entities/user.entity";
 import { User } from "../models/user.models";
 

@@ -1,5 +1,5 @@
 import { title } from "process";
-import { Database } from "../database/config/database.conection";
+import { Database } from "../main/config/database.conection";
 import { ErrandEntity } from "../database/entities/errand.entity";
 import { Errands } from "../models/errands.models";
 import { User } from "../models/user.models";
