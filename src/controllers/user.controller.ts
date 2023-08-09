@@ -1,4 +1,4 @@
-import { User } from "../models/user.models";
+import { User } from "../app/models/user.models";
 import { UserRepository } from "../repositorys/user.repository";
 import { ApiResponse } from "../util/http-response.adapter";
 import { Request, Response, response } from "express";

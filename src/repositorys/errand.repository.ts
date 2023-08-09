@@ -1,9 +1,9 @@
 import { title } from "process";
 import { Database } from "../main/config/database.conection";
 import { ErrandEntity } from "../database/entities/errand.entity";
-import { Errands } from "../models/errands.models";
-import { User } from "../models/user.models";
+import { User } from "../app/models/user.models";
 import { UserRepository } from "./user.repository";
+import { Errands } from "../app/models/errands.models";
 
 interface ListTransactionsParams {
   idUser: string;

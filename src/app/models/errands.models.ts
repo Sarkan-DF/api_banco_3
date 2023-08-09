@@ -1,8 +1,8 @@
 // import { v4 as createUuid2 } from "uuid";
 
 import { randomUUID } from "crypto";
-import { ErrandEntity } from "../database/entities/errand.entity";
 import { User } from "./user.models";
+import { ErrandEntity } from "../../database/entities/errand.entity";
 
 export class Errands {
   public idErrands: string;

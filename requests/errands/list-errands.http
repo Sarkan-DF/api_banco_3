@@ -1,0 +1,5 @@
+@HOST = http://localhost:8080 
+@IDUSERS = 8ce08551-bc32-48e3-a0d7-17de2019da1d
+
+GET {{HOST}}/users/{{IDUSERS}}/errands HTTP/1.1
+Content-Type: application/json

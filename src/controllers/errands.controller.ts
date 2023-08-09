@@ -1,4 +1,4 @@
-import { Errands } from "../models/errands.models";
+import { Errands } from "../app/models/errands.models";
 import { ErradsReposity } from "../repositorys/errand.repository";
 import { UserRepository } from "../repositorys/user.repository";
 import { ApiResponse } from "../util/http-response.adapter";

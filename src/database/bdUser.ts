@@ -1,4 +1,4 @@
-import { User } from "../models/user.models";
+import { User } from "../app/models/user.models";
 
 export const bdUser = [
   new User("igor@gmail.com", "123456", "123456"),
