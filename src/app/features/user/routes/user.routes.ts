@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { UserControllers } from "../controllers/user.controller";
 import { userCheck } from "../validations/user.middlewares";
-import { errandsRoutes } from "../../../../routes/errands.routes";
+import { errandsRoutes } from "../../errand/routes/errands.routes";
 import { loginCheck } from "../validations/login.middlewares";
 
 export const userRoutes = () => {
