@@ -18,7 +18,7 @@ const dataSource = new DataSource({
   logging: true,
   synchronize: false,
   schema: "banco_dados",
-  entities: ["src/database/entities/**/*.ts"],
+  entities: ["src/app/shared/database/entities/**/*.ts"],
   migrations: ["src/database/migrations/**/*.ts"],
 });
 
