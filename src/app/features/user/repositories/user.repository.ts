@@ -1,7 +1,7 @@
 import { Entity } from "typeorm";
-import { Database } from "../main/config/database.conection";
-import { UserEntity } from "../app/shared/database/entities/user.entity";
-import { User } from "../app/models/user.models";
+import { Database } from "../../../../main/config/database.conection";
+import { UserEntity } from "../../../shared/database/entities/user.entity";
+import { User } from "../../../models/user.models";
 
 export class UserRepository {
   private repository = Database.connection.getRepository(UserEntity);

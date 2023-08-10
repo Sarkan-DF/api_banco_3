@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { UserControllers } from "../controllers/user.controller";
-import { userCheck } from "../middlewares/user.middlewares";
+import { UserControllers } from "../app/features/user/controllers/user.controller";
+import { userCheck } from "../app/features/user/validations/user.middlewares";
 import { ErrandsControllers } from "../controllers/errands.controller";
 import { errandsCheck } from "../middlewares/errands.middlewares";
 

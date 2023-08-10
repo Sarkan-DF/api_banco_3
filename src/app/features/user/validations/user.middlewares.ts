@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { ApiResponse } from "../app/shared/util/http-response.adapter";
+import { ApiResponse } from "../../../shared/util/http-response.adapter";
 
-export const loginCheck = (req: Request, res: Response, next: NextFunction) => {
+export const userCheck = (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
 
   if (!email) {
@@ -12,5 +12,8 @@ export const loginCheck = (req: Request, res: Response, next: NextFunction) => {
     return ApiResponse.notProvided(res, "Senha");
   }
 
+  // if (!confirmPassword) {
+  //   return ApiResponse.notProvided(res, "Confirmação de senha");
+  // }
   next();
 };

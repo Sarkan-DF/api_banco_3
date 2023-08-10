@@ -1,7 +1,7 @@
 import { title } from "process";
 import { Database } from "../main/config/database.conection";
 import { User } from "../app/models/user.models";
-import { UserRepository } from "./user.repository";
+import { UserRepository } from "../app/features/user/repositories/user.repository";
 import { Errands } from "../app/models/errands.models";
 import { ErrandEntity } from "../app/shared/database/entities/errand.entity";
 

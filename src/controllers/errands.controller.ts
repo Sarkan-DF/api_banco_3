@@ -1,6 +1,6 @@
 import { Errands } from "../app/models/errands.models";
 import { ErradsReposity } from "../repositorys/errand.repository";
-import { UserRepository } from "../repositorys/user.repository";
+import { UserRepository } from "../app/features/user/repositories/user.repository";
 import { ApiResponse } from "../app/shared/util/http-response.adapter";
 import { Request, Response, response } from "express";
 
