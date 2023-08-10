@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ApiResponse } from "../util/http-response.adapter";
+import { ApiResponse } from "../app/shared/util/http-response.adapter";
 
 export const errandsCheck = (
   req: Request,
