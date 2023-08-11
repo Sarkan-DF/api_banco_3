@@ -2,64 +2,44 @@ import { User } from "../../../models/user.models";
 import { UserRepository } from "../repositories/user.repository";
 import { ApiResponse } from "../../../shared/util/http-response.adapter";
 import { Request, Response, response } from "express";
+import { CreateUserUsecase } from "../usecases/create-user.usecase";
+import { ListUserUsecase } from "../usecases/list-user.usecase";
+import { LoginUserUsecase } from "../usecases/login-user.usecase";
 
 export class UserControllers {
+  //Já refatorado para usecase
   public async create(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
-      const repository = new UserRepository();
 
-      const existeByEmail = await repository.getByEmail(email);
+      const usecase = new CreateUserUsecase();
+      const result = await usecase.execute({ email, password });
 
-      if (existeByEmail) {
-        return ApiResponse.notProvided(res, "Email já existe no banco!!!");
-      }
-
-      const user = new User(email, password);
-      const result = await repository.create(user);
-
-      return ApiResponse.success(
-        res,
-        "Usuario criado com sucesso!",
-        result.toJson()
-      );
+      return ApiResponse.success(res, result);
     } catch (error: any) {
       return ApiResponse.serverError(res, error);
     }
   }
-
+  //Já refatorado para usecase
   public async list(req: Request, res: Response) {
     try {
-      const repository = new UserRepository();
-      const result = await repository.list();
+      const usecase = new ListUserUsecase();
+      const result = await usecase.execute();
 
-      return ApiResponse.success(
-        res,
-        "Lista de usuarios",
-        result.map((users) => users.toJson())
-      );
+      return ApiResponse.success(res, result);
     } catch (error: any) {
       return ApiResponse.serverError(res, error);
     }
   }
-
+  //Já refatorado para usecase
   public async login(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
-      const repository = new UserRepository();
-      const login = await new UserRepository().getByEmail(email);
 
-      const existeByEmail = await repository.getByEmail(email);
-      const existeByPassword = await repository.getByPassword(password);
+      const usecase = new LoginUserUsecase();
+      const result = await usecase.execute({ email, password });
 
-      if (!existeByEmail || !existeByPassword) {
-        return ApiResponse.invalidCredentials(res);
-      }
-
-      return ApiResponse.success(res, "Logim efetuado com sucesso!", {
-        idUser: login?.idUser,
-        email: login?.email,
-      });
+      return ApiResponse.success(res, result);
     } catch (error: any) {
       return ApiResponse.serverError(res, error);
     }

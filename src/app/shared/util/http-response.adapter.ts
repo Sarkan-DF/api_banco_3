@@ -1,4 +1,5 @@
 import { Response } from "express";
+import { Result } from "./result.contract";
 
 export class ApiResponse {
   public static notFound(res: Response, entity: string) {
@@ -8,12 +9,8 @@ export class ApiResponse {
     });
   }
 
-  public static success(res: Response, message: string, data: any) {
-    return res.status(200).send({
-      ok: true,
-      message,
-      data,
-    });
+  public static success(res: Response, result: Result) {
+    return res.status(result.code).send(result);
   }
 
   public static serverError(res: Response, error: any) {
