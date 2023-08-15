@@ -15,7 +15,7 @@ const dataSource = new DataSource({
   ssl: {
     rejectUnauthorized: false,
   },
-  logging: true,
+  // logging: true,
   synchronize: false,
   schema: "banco_dados",
   entities: ["src/app/shared/database/entities/**/*.ts"],

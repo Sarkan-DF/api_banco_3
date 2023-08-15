@@ -3,6 +3,7 @@ import { ErradsReposity } from "../repositories/errand.repository";
 import { UserRepository } from "../../user/repositories/user.repository";
 import { ApiResponse } from "../../../shared/util/http-response.adapter";
 import { Request, Response, response } from "express";
+import { CreateErrandUsecase } from "../usecases/create-errand.usecase";
 
 export class ErrandsControllers {
   public async create(req: Request, res: Response) {
@@ -10,20 +11,10 @@ export class ErrandsControllers {
       const { iduser } = req.params;
       const { title, description } = req.body;
 
-      const user = await new UserRepository().getById(iduser);
+      const usecase = new CreateErrandUsecase();
+      const result = await usecase.execute({ title, description, iduser });
 
-      if (!user) {
-        return ApiResponse.notFound(res, "Usuario não encontrado!");
-      }
-
-      const errand = new Errands(title, description, user);
-      const result = await new ErradsReposity().create(errand);
-
-      return ApiResponse.success(
-        res,
-        "Recado Criado com sucesso",
-        result.toJsonE()
-      );
+      return ApiResponse.success(res, result);
     } catch (error: any) {
       return ApiResponse.serverError(res, error);
     }
