@@ -10,5 +10,6 @@ export class Database {
 
   public static async connect() {
     this._connection = await dataSource.initialize();
+    console.log("Banco de dados conectado!");
   }
 }
