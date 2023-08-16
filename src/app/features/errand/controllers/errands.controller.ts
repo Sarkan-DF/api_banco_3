@@ -5,6 +5,7 @@ import { ApiResponse } from "../../../shared/util/http-response.adapter";
 import { Request, Response, response } from "express";
 import { CreateErrandUsecase } from "../usecases/create-errand.usecase";
 import { ListErrandUsecase } from "../usecases/list-errand.usecase";
+import { DeleteErrandUsecase } from "../usecases/delete-errand.usecase";
 
 export class ErrandsControllers {
   public async create(req: Request, res: Response) {
@@ -40,29 +41,10 @@ export class ErrandsControllers {
     try {
       const { iduser, iderrands } = req.params;
 
-      const user = await new UserRepository().getById(iduser);
-      if (!user) {
-        return ApiResponse.notFound(res, "Usuario");
-      }
+      const usecase = new DeleteErrandUsecase();
+      const result = await usecase.execute({ iduser, iderrands });
 
-      const erradsReposity = new ErradsReposity();
-      const deleteErrands = await erradsReposity.delete(iderrands);
-
-      console.log(deleteErrands);
-
-      if (deleteErrands == 0) {
-        return ApiResponse.notFound(res, "Recados!!!!");
-      }
-
-      const errands = await erradsReposity.list({
-        idUser: iduser,
-      });
-
-      return ApiResponse.success(
-        res,
-        "Recado deletado com sucesso",
-        errands.map((errand) => errand.toJsonE())
-      );
+      return ApiResponse.success(res, result);
     } catch (error: any) {
       return ApiResponse.serverError(res, error);
     }
