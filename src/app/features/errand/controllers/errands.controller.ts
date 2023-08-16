@@ -6,6 +6,7 @@ import { Request, Response, response } from "express";
 import { CreateErrandUsecase } from "../usecases/create-errand.usecase";
 import { ListErrandUsecase } from "../usecases/list-errand.usecase";
 import { DeleteErrandUsecase } from "../usecases/delete-errand.usecase";
+import { UpdateErrandUsecase } from "../usecases/update-errand.usecase";
 
 export class ErrandsControllers {
   public async create(req: Request, res: Response) {
@@ -55,37 +56,15 @@ export class ErrandsControllers {
       const { iduser, iderrands } = req.params;
       const { title, description } = req.body;
 
-      const user = await new UserRepository().getById(iduser);
-      if (!user) {
-        return ApiResponse.notFound(res, "Usuario");
-      }
-
-      const errandRepository = new ErradsReposity();
-      const errand = await errandRepository.getByIdErrand(iderrands);
-
-      if (!errand) {
-        return ApiResponse.notFound(res, "Recado");
-      }
-
-      if (title) {
-        errand.title = title;
-      }
-
-      if (description) {
-        errand.description = description;
-      }
-
-      await errandRepository.update(errand);
-
-      const errands = await errandRepository.list({
-        idUser: iduser,
+      const usecase = new UpdateErrandUsecase();
+      const result = await usecase.execute({
+        iduser,
+        iderrands,
+        title,
+        description,
       });
 
-      return ApiResponse.success(
-        res,
-        "Recado alterado com sucesso",
-        errands.map((errand) => errand.toJsonE())
-      );
+      return ApiResponse.success(res, result);
     } catch (error: any) {
       return ApiResponse.serverError(res, error);
     }
