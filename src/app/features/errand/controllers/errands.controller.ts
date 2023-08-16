@@ -4,6 +4,7 @@ import { UserRepository } from "../../user/repositories/user.repository";
 import { ApiResponse } from "../../../shared/util/http-response.adapter";
 import { Request, Response, response } from "express";
 import { CreateErrandUsecase } from "../usecases/create-errand.usecase";
+import { ListErrandUsecase } from "../usecases/list-errand.usecase";
 
 export class ErrandsControllers {
   public async create(req: Request, res: Response) {
@@ -23,19 +24,13 @@ export class ErrandsControllers {
   public async list(req: Request, res: Response) {
     try {
       const { iduser } = req.params;
+
+      const usecase = new ListErrandUsecase();
+      const result = await usecase.execute(iduser);
+
       const user = await new UserRepository().getById(iduser);
 
-      if (!user) {
-        return ApiResponse.notFound(res, "Usuario não encontrado!");
-      }
-
-      const errand = await new ErradsReposity().list({ idUser: iduser });
-
-      return ApiResponse.success(
-        res,
-        `Lista de recados do usuario ${user.email}`,
-        errand.map((user) => user.toJsonE())
-      );
+      return ApiResponse.success(res, result);
     } catch (error: any) {
       return ApiResponse.serverError(res, error);
     }
