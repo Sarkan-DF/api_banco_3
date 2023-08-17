@@ -1,4 +1,5 @@
 import { User } from "../../../models/user.models";
+import { CacheRepository } from "../../../shared/database/repositories/cache.repository";
 import { ApiResponse } from "../../../shared/util/http-response.adapter";
 import { UsecaseResponse } from "../../../shared/util/response.adapter";
 import { Result } from "../../../shared/util/result.contract";
@@ -8,11 +9,28 @@ import { UserRepository } from "../repositories/user.repository";
 export class ListUserUsecase implements Usecase {
   public async execute(): Promise<Result> {
     const repository = new UserRepository();
+
+    const cacheRepository = new CacheRepository();
+    const cacheResult = await cacheRepository.get("users-cache");
+
+    if (cacheResult) {
+      return {
+        ok: true,
+        message: "Usuario(s) listado(s) com sucesso! (cache)",
+        code: 201,
+        data: cacheResult,
+      };
+    }
+
     const result = await repository.list();
+
+    const data = result.map((list) => list.toJson());
+
+    await cacheRepository.set("users-cache", data);
 
     return {
       ok: true,
-      message: "Usuario criado com sucesso!",
+      message: "Usuario(s) listado(s) com sucesso!",
       code: 201,
       data: result.map((list) => list.toJson()),
     };

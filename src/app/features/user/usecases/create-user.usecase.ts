@@ -1,5 +1,5 @@
 import { User } from "../../../models/user.models";
-import { ApiResponse } from "../../../shared/util/http-response.adapter";
+import { CacheRepository } from "../../../shared/database/repositories/cache.repository";
 import { UsecaseResponse } from "../../../shared/util/response.adapter";
 import { Result } from "../../../shared/util/result.contract";
 import { Usecase } from "../../../shared/util/usecase.contract";
@@ -21,6 +21,11 @@ export class CreateUserUsecase implements Usecase {
 
     const user = new User(params.email, params.password);
     const result = await repository.create(user);
+
+    const cacheRepository = new CacheRepository();
+    await cacheRepository.setEx(`user-${user.email}`, 86400, result.toJson());
+
+    await cacheRepository.delete("users-cache");
 
     return {
       ok: true,
