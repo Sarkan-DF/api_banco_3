@@ -1,4 +1,5 @@
 import { Errands } from "../../../models/errands.models";
+import { CacheRepository } from "../../../shared/database/repositories/cache.repository";
 import { UsecaseResponse } from "../../../shared/util/response.adapter";
 import { Result } from "../../../shared/util/result.contract";
 import { Usecase } from "../../../shared/util/usecase.contract";
@@ -25,6 +26,9 @@ export class DeleteErrandUsecase implements Usecase {
     if (deleteErrands == 0) {
       return UsecaseResponse.notFound("Recado");
     }
+
+    const cacheRepository = new CacheRepository();
+    await cacheRepository.delete("errands-cache");
 
     const result = await erradsReposity.list({ idUser: params.iduser });
 
