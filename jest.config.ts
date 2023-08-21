@@ -1,6 +1,6 @@
 export default {
   // Configura o Jest para testes no Node.js
-  // usando Typescript.
+  // usando Typescript..
   preset: "ts-jest",
   testEnvironment: "node",
   transform: {

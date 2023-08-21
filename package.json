@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only ./src/index.ts",
     "dev:debug": "ts-node-dev --inspect --respawn --transpile-only ./src/index.ts",
     "postinstall": "tsc",
@@ -14,7 +13,11 @@
     "typeorm:create": "typeorm migration:create",
     "typeorm:run": "npm run typeorm migration:run -- -d ./src/database/config/database.config.ts",
     "typeorm:revert": "npm run typeorm migration:revert -- -d ./src/database/config/database.config.ts",
-    "typeorm:generate": "npm run typeorm migration:generate -- -d ./src/database/config/database.config.ts"
+    "typeorm:generate": "npm run typeorm migration:generate -- -d ./src/database/config/database.config.ts",
+    "test": "jest --silent --noStackTrace --runInBand",
+    "test:verbose": "jest -verbose -runInBand -detectOpenHandles",
+    "test:coverage": "jest -runInBand -coverage",
+    "test:watch": "jest --silent --noStackTrace --runInBand --watchAll"
   },
   "keywords": [],
   "author": "",
