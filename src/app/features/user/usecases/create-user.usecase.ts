@@ -16,7 +16,7 @@ export class CreateUserUsecase implements Usecase {
     const existeByEmail = await repository.getByEmail(params.email);
 
     if (existeByEmail) {
-      return UsecaseResponse.invalidField("email", "já cadastrado!");
+      return UsecaseResponse.invalidField("Email", "já cadastrado!");
     }
 
     const user = new User(params.email, params.password);

@@ -1,5 +1,3 @@
-import { User } from "../../../models/user.models";
-import { ApiResponse } from "../../../shared/util/http-response.adapter";
 import { UsecaseResponse } from "../../../shared/util/response.adapter";
 import { Result } from "../../../shared/util/result.contract";
 import { Usecase } from "../../../shared/util/usecase.contract";
@@ -18,11 +16,11 @@ export class LoginUserUsecase implements Usecase {
     const existeByPassword = await repository.getByPassword(params.password);
 
     if (!existeByEmail || !existeByPassword) {
-      return UsecaseResponse.invalidField("email ou senha", "não enviado!");
+      return UsecaseResponse.invalidField("Email ou senha", "não enviado!");
     }
 
     if (existeByEmail.password != params.password) {
-      return UsecaseResponse.invalidField("email ou senha", "errados!");
+      return UsecaseResponse.invalidField("Email ou senha", "incorretos!");
     }
 
     const result = { idUser: existeByEmail.idUser, email: existeByEmail.email };

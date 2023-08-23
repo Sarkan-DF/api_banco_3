@@ -20,7 +20,7 @@ export class UsecaseResponse {
   public static invalidField(field: string, reason: string): Result {
     return {
       ok: false,
-      message: `${field} invalido: ${reason} `,
+      message: `${field} invalido: ${reason}`,
       code: 400,
     };
   }
