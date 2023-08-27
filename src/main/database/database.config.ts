@@ -3,7 +3,7 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-const dataSource = new DataSource({
+let config = new DataSource({
   type: "postgres",
   port: 8080,
   host: process.env.DB_HOST,
@@ -15,11 +15,20 @@ const dataSource = new DataSource({
   ssl: {
     rejectUnauthorized: false,
   },
-  // logging: true,
   synchronize: false,
   schema: "banco_dados",
   entities: ["src/app/shared/database/entities/**/*.ts"],
-  migrations: ["src/database/migrations/**/*.ts"],
+  migrations: ["src/app/shared/database/migrations/**/*.ts"],
 });
 
-export default dataSource;
+// if (process.env.DB_ENV) {
+//   config = new DataSource({
+//     type: "sqlite",
+//     database: "db.sqlite3",
+//     synchronize: false,
+//     entities: ["src/app/shared/database/entities/**/*.ts"],
+//     migrations: ["tests/app/shared/database/migrations/**/*.ts"],
+//   });
+// }
+
+export default config;

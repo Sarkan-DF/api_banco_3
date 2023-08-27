@@ -2,7 +2,7 @@
 
 import { randomUUID } from "crypto";
 import { User } from "./user.models";
-import { ErrandEntity } from "../../database/entities/errand.entity";
+import { ErrandEntity } from "../shared/database/entities/errand.entity";
 
 export class Errands {
   public idErrands: string;

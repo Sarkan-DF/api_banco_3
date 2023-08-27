@@ -1,9 +1,9 @@
-import { UserRepository } from "../../../../../src/app/features/user/repositories/user.repository";
-import { CreateUserUsecase } from "../../../../../src/app/features/user/usecases/create-user.usecase";
-import { User } from "../../../../../src/app/models/user.models";
-import { CacheRepository } from "../../../../../src/app/shared/database/repositories/cache.repository";
 import { Database } from "../../../../../src/main/config/database.conection";
 import { CacheDatabase } from "../../../../../src/main/database/redis.connections";
+import { CreateUserUsecase } from "../../../../../src/app/features/user/usecases/create-user.usecase";
+import { User } from "../../../../../src/app/models/user.models";
+import { UserRepository } from "../../../../../src/app/features/user/repositories/user.repository";
+import { CacheRepository } from "../../../../../src/app/shared/database/repositories/cache.repository";
 
 describe("CreateUserUsecase", () => {
   beforeAll(async () => {
@@ -16,6 +16,11 @@ describe("CreateUserUsecase", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
+
+    jest.spyOn(UserRepository.prototype, "getById").mockResolvedValue(mockUser);
+    jest.spyOn(UserRepository.prototype, "create").mockResolvedValue(mockUser);
+    jest.spyOn(CacheRepository.prototype, "setEx").mockResolvedValue();
+    jest.spyOn(CacheRepository.prototype, "delete").mockResolvedValue();
   });
 
   afterAll(async () => {
@@ -51,11 +56,6 @@ describe("CreateUserUsecase", () => {
 
   test("Deve retorna ok:true code:201 quando usuario for criado com sucesso", async () => {
     const sut = createSut();
-
-    jest.spyOn(UserRepository.prototype, "getById").mockResolvedValue(mockUser);
-    jest.spyOn(UserRepository.prototype, "create").mockResolvedValue(mockUser);
-    jest.spyOn(CacheRepository.prototype, "setEx").mockResolvedValue();
-    jest.spyOn(CacheRepository.prototype, "delete").mockResolvedValue();
 
     const result = await sut.execute({
       email: "any_email",

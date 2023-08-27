@@ -6,7 +6,7 @@ import { ErrandEntity } from "../../../shared/database/entities/errand.entity";
 interface ListTransactionsParams {
   idUser: string;
 }
-export class ErradsReposity {
+export class ErrandReposity {
   private repository = Database.connection.getRepository(ErrandEntity);
 
   public async create(errand: Errands) {
