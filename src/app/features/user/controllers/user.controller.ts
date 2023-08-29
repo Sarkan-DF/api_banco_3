@@ -1,5 +1,3 @@
-import { User } from "../../../models/user.models";
-import { UserRepository } from "../repositories/user.repository";
 import { ApiResponse } from "../../../shared/util/http-response.adapter";
 import { Request, Response, response } from "express";
 import { CreateUserUsecase } from "../usecases/create-user.usecase";

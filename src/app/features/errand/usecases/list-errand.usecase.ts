@@ -1,10 +1,9 @@
-import { Errands } from "../../../models/errands.models";
 import { CacheRepository } from "../../../shared/database/repositories/cache.repository";
 import { UsecaseResponse } from "../../../shared/util/response.adapter";
 import { Result } from "../../../shared/util/result.contract";
 import { Usecase } from "../../../shared/util/usecase.contract";
 import { UserRepository } from "../../user/repositories/user.repository";
-import { ErradsReposity } from "../repositories/errand.repository";
+import { ErrandReposity } from "../repositories/errand.repository";
 
 export class ListErrandUsecase implements Usecase {
   public async execute(idUser: string): Promise<Result> {
@@ -12,7 +11,7 @@ export class ListErrandUsecase implements Usecase {
     const user = await repository.getById(idUser);
 
     if (!user) {
-      return UsecaseResponse.notFound("Usuario não encontrado!");
+      return UsecaseResponse.notFound("User");
     }
 
     const cacheRepository = new CacheRepository();
@@ -27,7 +26,9 @@ export class ListErrandUsecase implements Usecase {
       };
     }
 
-    const result = await new ErradsReposity().list({ idUser });
+    //testado até aqui!!!
+
+    const result = await new ErrandReposity().list({ idUser });
 
     const data = result.map((list) => list.toJsonE());
 

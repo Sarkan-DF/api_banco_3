@@ -4,7 +4,7 @@ import { UsecaseResponse } from "../../../shared/util/response.adapter";
 import { Result } from "../../../shared/util/result.contract";
 import { Usecase } from "../../../shared/util/usecase.contract";
 import { UserRepository } from "../../user/repositories/user.repository";
-import { ErradsReposity } from "../repositories/errand.repository";
+import { ErrandReposity } from "../repositories/errand.repository";
 
 interface DeleteErrandParams {
   iderrands: string;
@@ -20,7 +20,7 @@ export class DeleteErrandUsecase implements Usecase {
       return UsecaseResponse.notFound("Usuario não encontrado!");
     }
 
-    const erradsReposity = new ErradsReposity();
+    const erradsReposity = new ErrandReposity();
     const deleteErrands = await erradsReposity.delete(params.iderrands);
 
     if (deleteErrands == 0) {

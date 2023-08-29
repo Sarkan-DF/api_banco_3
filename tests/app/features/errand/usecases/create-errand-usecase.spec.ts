@@ -1,11 +1,11 @@
-import { Database } from "../../../../src/main/config/database.conection";
-import { CacheDatabase } from "../../../../src/main/database/redis.connections";
-import { CreateErrandUsecase } from "../../../../src/app/features/errand/usecases/create-errand.usecase";
-import { UserRepository } from "../../../../src/app/features/user/repositories/user.repository";
-import { Errands } from "../../../../src/app/models/errands.models";
-import { User } from "../../../../src/app/models/user.models";
-import { ErrandReposity } from "../../../../src/app/features/errand/repositories/errand.repository";
-import { CacheRepository } from "../../../../src/app/shared/database/repositories/cache.repository";
+import { Database } from "../../../../../src/main/config/database.conection";
+import { CacheDatabase } from "../../../../../src/main/database/redis.connections";
+import { CreateErrandUsecase } from "../../../../../src/app/features/errand/usecases/create-errand.usecase";
+import { UserRepository } from "../../../../../src/app/features/user/repositories/user.repository";
+import { Errands } from "../../../../../src/app/models/errands.models";
+import { User } from "../../../../../src/app/models/user.models";
+import { ErrandReposity } from "../../../../../src/app/features/errand/repositories/errand.repository";
+import { CacheRepository } from "../../../../../src/app/shared/database/repositories/cache.repository";
 
 describe("CreateErrandUsecase", () => {
   beforeAll(async () => {
@@ -39,7 +39,7 @@ describe("CreateErrandUsecase", () => {
   const mockUser = new User("any_email", "any_senha");
   const mockErrands = new Errands("any_title", "any_description", mockUser);
 
-  test("Deve retornar ok: false e code:404 quando não existir usuaria", async () => {
+  test("Deve retornar ok: false e code:404 quando não existir usuario", async () => {
     const sut = createSut();
 
     jest

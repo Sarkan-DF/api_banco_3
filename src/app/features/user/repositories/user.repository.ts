@@ -1,4 +1,3 @@
-import { Entity } from "typeorm";
 import { Database } from "../../../../main/config/database.conection";
 import { UserEntity } from "../../../shared/database/entities/user.entity";
 import { User } from "../../../models/user.models";
