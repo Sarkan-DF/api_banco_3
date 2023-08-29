@@ -2,7 +2,6 @@ import { Database } from "../../../../../src/main/config/database.conection";
 import { CacheDatabase } from "../../../../../src/main/database/redis.connections";
 import { ListErrandUsecase } from "../../../../../src/app/features/errand/usecases/list-errand.usecase";
 import { User } from "../../../../../src/app/models/user.models";
-import { Errands } from "../../../../../src/app/models/errands.models";
 import { UserRepository } from "../../../../../src/app/features/user/repositories/user.repository";
 import { CacheRepository } from "../../../../../src/app/shared/database/repositories/cache.repository";
 describe("ListErrandUsecase", () => {
@@ -53,11 +52,6 @@ describe("ListErrandUsecase", () => {
 
   test("Deve retornar ok:true e code:201 quando existir lista em cache", async () => {
     const sut = createSut();
-
-    // jest.spyOn(UserRepository.prototype, "getById").mockResolvedValue(mockUser);
-    // jest
-    //   .spyOn(CacheRepository.prototype, "get")
-    //   .mockResolvedValue("any_errans-cache");
 
     const result = await sut.execute(mockUser.idUser);
 

@@ -17,14 +17,14 @@ export class DeleteErrandUsecase implements Usecase {
     const user = await repository.getById(params.iduser);
 
     if (!user) {
-      return UsecaseResponse.notFound("Usuario não encontrado!");
+      return UsecaseResponse.notFound("User");
     }
 
     const erradsReposity = new ErrandReposity();
     const deleteErrands = await erradsReposity.delete(params.iderrands);
 
     if (deleteErrands == 0) {
-      return UsecaseResponse.notFound("Recado");
+      return UsecaseResponse.notFound("Errand");
     }
 
     const cacheRepository = new CacheRepository();
@@ -34,7 +34,7 @@ export class DeleteErrandUsecase implements Usecase {
 
     return {
       ok: true,
-      message: `Recado deletado com sucesso!`,
+      message: `Errand successfully deleted`,
       code: 201,
       data: result.map((item) => item.toJsonE()),
     };
