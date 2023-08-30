@@ -1,4 +1,3 @@
-import { Errands } from "../../../models/errands.models";
 import { CacheRepository } from "../../../shared/database/repositories/cache.repository";
 import { UsecaseResponse } from "../../../shared/util/response.adapter";
 import { Result } from "../../../shared/util/result.contract";
@@ -9,8 +8,8 @@ import { ErrandReposity } from "../repositories/errand.repository";
 interface UpdateErrandParams {
   iderrands: string;
   iduser: string;
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
 }
 
 export class UpdateErrandUsecase implements Usecase {
@@ -19,7 +18,7 @@ export class UpdateErrandUsecase implements Usecase {
     const user = await repository.getById(params.iduser);
 
     if (!user) {
-      return UsecaseResponse.notFound("Usuario não encontrado!");
+      return UsecaseResponse.notFound("User");
     }
 
     const errandRepository = new ErrandReposity();
