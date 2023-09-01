@@ -1,12 +1,11 @@
 import { UserRepository } from "../../../../../src/app/features/user/repositories/user.repository";
 import { LoginUserUsecase } from "../../../../../src/app/features/user/usecases/login-user.usecase";
 import { User } from "../../../../../src/app/models/user.models";
-import { Database } from "../../../../../src/main/config/database.conection";
+import { Database } from "../../../../../src/main/database/database.conection";
 
 describe("LoginUserUsecase", () => {
   beforeAll(async () => {
     await Database.connect();
-    jest.setTimeout(300000);
   });
 
   beforeEach(() => {

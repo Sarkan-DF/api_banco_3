@@ -1,4 +1,3 @@
-import { Database } from "../../../../../src/main/config/database.conection";
 import { CacheDatabase } from "../../../../../src/main/database/redis.connections";
 import { DeleteErrandUsecase } from "../../../../../src/app/features/errand/usecases/delete-errand.usecase";
 import { UserRepository } from "../../../../../src/app/features/user/repositories/user.repository";
@@ -6,12 +5,12 @@ import { User } from "../../../../../src/app/models/user.models";
 import { Errands } from "../../../../../src/app/models/errands.models";
 import { ErrandReposity } from "../../../../../src/app/features/errand/repositories/errand.repository";
 import { CacheRepository } from "../../../../../src/app/shared/database/repositories/cache.repository";
+import { Database } from "../../../../../src/main/database/database.conection";
 
 describe("DeleteErrandUsecase", () => {
   beforeAll(async () => {
     await Database.connect();
     await CacheDatabase.connect();
-    jest.setTimeout(300000);
   });
 
   beforeEach(() => {

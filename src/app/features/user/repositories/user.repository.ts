@@ -1,4 +1,4 @@
-import { Database } from "../../../../main/config/database.conection";
+import { Database } from "../../../../main/database/database.conection";
 import { UserEntity } from "../../../shared/database/entities/user.entity";
 import { User } from "../../../models/user.models";
 

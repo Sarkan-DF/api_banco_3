@@ -2,15 +2,13 @@ import { UserRepository } from "../../../../../src/app/features/user/repositorie
 import { ListUserUsecase } from "../../../../../src/app/features/user/usecases/list-user.usecase";
 import { User } from "../../../../../src/app/models/user.models";
 import { CacheRepository } from "../../../../../src/app/shared/database/repositories/cache.repository";
-import { Database } from "../../../../../src/main/config/database.conection";
+import { Database } from "../../../../../src/main/database/database.conection";
 import { CacheDatabase } from "../../../../../src/main/database/redis.connections";
 
 describe("ListUserUsecase", () => {
   beforeAll(async () => {
     await Database.connect();
     await CacheDatabase.connect();
-
-    jest.setTimeout(300000);
   });
 
   beforeEach(() => {

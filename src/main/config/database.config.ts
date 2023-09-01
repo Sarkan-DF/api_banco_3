@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 import * as dotenv from "dotenv";
+import { type } from "os";
 
 dotenv.config();
 
@@ -21,14 +22,14 @@ let config = new DataSource({
   migrations: ["src/app/shared/database/migrations/**/*.ts"],
 });
 
-// if (process.env.DB_ENV) {
-//   config = new DataSource({
-//     type: "sqlite",
-//     database: "db.sqlite3",
-//     synchronize: false,
-//     entities: ["src/app/shared/database/entities/**/*.ts"],
-//     migrations: ["tests/app/shared/database/migrations/**/*.ts"],
-//   });
-// }
+if (process.env.DB_ENV === "test") {
+  config = new DataSource({
+    type: "sqlite",
+    database: "db.sqlite",
+    synchronize: false,
+    entities: ["src/app/shared/database/entities/**/*.ts"],
+    migrations: ["tests/app/shared/database/migrations/**/*.ts"],
+  });
+}
 
 export default config;

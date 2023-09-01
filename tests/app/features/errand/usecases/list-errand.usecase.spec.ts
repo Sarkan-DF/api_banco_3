@@ -1,14 +1,13 @@
-import { Database } from "../../../../../src/main/config/database.conection";
 import { CacheDatabase } from "../../../../../src/main/database/redis.connections";
 import { ListErrandUsecase } from "../../../../../src/app/features/errand/usecases/list-errand.usecase";
 import { User } from "../../../../../src/app/models/user.models";
 import { UserRepository } from "../../../../../src/app/features/user/repositories/user.repository";
 import { CacheRepository } from "../../../../../src/app/shared/database/repositories/cache.repository";
+import { Database } from "../../../../../src/main/database/database.conection";
 describe("ListErrandUsecase", () => {
   beforeAll(async () => {
     await Database.connect();
     await CacheDatabase.connect();
-    jest.setTimeout(300000);
   });
 
   beforeEach(() => {

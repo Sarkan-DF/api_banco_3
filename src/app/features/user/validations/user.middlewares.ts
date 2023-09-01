@@ -11,9 +11,5 @@ export const userCheck = (req: Request, res: Response, next: NextFunction) => {
   if (!password) {
     return ApiResponse.notProvided(res, "Senha");
   }
-
-  // if (!confirmPassword) {
-  //   return ApiResponse.notProvided(res, "Confirmação de senha");
-  // }
   next();
 };
