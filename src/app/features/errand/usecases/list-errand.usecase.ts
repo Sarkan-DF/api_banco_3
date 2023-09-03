@@ -26,8 +26,6 @@ export class ListErrandUsecase implements Usecase {
       };
     }
 
-    //testado até aqui!!!
-
     const result = await new ErrandReposity().list({ idUser });
 
     const data = result.map((list) => list.toJsonE());
