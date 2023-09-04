@@ -15,14 +15,12 @@ export class DeleteErrandUsecase implements Usecase {
   public async execute(params: DeleteErrandParams): Promise<Result> {
     const repository = new UserRepository();
     const user = await repository.getById(params.iduser);
-
     if (!user) {
       return UsecaseResponse.notFound("User");
     }
 
     const erradsReposity = new ErrandReposity();
     const deleteErrands = await erradsReposity.delete(params.iderrands);
-
     if (deleteErrands == 0) {
       return UsecaseResponse.notFound("Errand");
     }
