@@ -12,9 +12,9 @@ export class ErrandReposity {
   public async create(errand: Errands) {
     const ErrandEntity = await this.repository.create({
       idErrands: errand.idErrands,
+      idUser: errand.user.idUser,
       title: errand.title,
       description: errand.description,
-      idUser: errand.user.idUser,
     });
 
     await this.repository.save(ErrandEntity);

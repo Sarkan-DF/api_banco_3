@@ -25,7 +25,7 @@ export class UpdateErrandUsecase implements Usecase {
     const errand = await errandRepository.getByIdErrand(params.iderrands);
 
     if (!errand) {
-      return UsecaseResponse.notFound("Recado");
+      return UsecaseResponse.notFound("Errand");
     }
 
     if (params.title) {
@@ -45,7 +45,7 @@ export class UpdateErrandUsecase implements Usecase {
 
     return {
       ok: true,
-      message: `Recado alterado com sucesso!`,
+      message: `Errand updated successfully`,
       code: 201,
       data: result.map((item) => item.toJsonE()),
     };

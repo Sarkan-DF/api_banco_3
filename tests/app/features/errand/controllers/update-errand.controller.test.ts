@@ -9,7 +9,7 @@ import { UserRepository } from "../../../../../src/app/features/user/repositorie
 import { ErrandReposity } from "../../../../../src/app/features/errand/repositories/errand.repository";
 import { CacheRepository } from "../../../../../src/app/shared/database/repositories/cache.repository";
 
-describe("Testando deletar recado", () => {
+describe("Testando atualizar recado", () => {
   beforeAll(async () => {
     await Database.connect();
     await CacheDatabase.connect();
@@ -33,22 +33,25 @@ describe("Testando deletar recado", () => {
 
   const sut = Server.create();
 
+  const user = new User("any_email", "any_password");
+  const errand = new Errands("any_title", "any_description", user);
+
   const createUser = async (user: User) => {
     const repository = new UserRepository();
     await repository.create(user);
   };
 
-  const createDeleteErrand = async (idErrand: string) => {
+  const createErrand = async (errand: Errands) => {
     const repository = new ErrandReposity();
-    await repository.delete(idErrand);
+    await repository.create(errand);
   };
 
   test("Deve retornar ok:false code:404 caso user não imformado ou não existir", async () => {
-    const user = new User("any_email", "any_password");
-    const errand = new Errands("any_title", "any_description", user);
+    // const user = new User("any_email", "any_password");
+    // const errand = new Errands("any_title", "any_description", user);
 
     const result = await supertest(sut)
-      .delete(`/users/${user.idUser}/errands/${errand.idErrands}`)
+      .put(`/users/${user.idUser}/errands/${errand.idErrands}`)
       .send();
 
     expect(result).toBeDefined();
@@ -60,13 +63,13 @@ describe("Testando deletar recado", () => {
   });
 
   test("Deve retornar ok:false code:404 caso recado não imformado ou não existir", async () => {
-    const user = new User("any_email", "any_password");
-    const errand = new Errands("any_title", "any_description", user);
+    // const user = new User("any_email", "any_password");
+    // const errand = new Errands("any_title", "any_description", user);
 
     await createUser(user);
 
     const result = await supertest(sut)
-      .delete(`/users/${user.idUser}/errands/${errand.idErrands}`)
+      .put(`/users/${user.idUser}/errands/${errand.idErrands}`)
       .send();
 
     expect(result).toBeDefined();
@@ -77,23 +80,51 @@ describe("Testando deletar recado", () => {
     expect(result.body.message).toEqual("Errand not found");
   });
 
-  test("Deve retornar ok:true code:201 caso recado deletado com sucesso", async () => {
-    const user = new User("any_email", "any_password");
+  test("Deve retornar ok:true code:201 caso recado alterado com sucesso com title e description informados", async () => {
     await createUser(user);
 
-    const errand = new Errands("any_title", "any_description", user);
-    await createDeleteErrand(errand.idErrands); //Não consegui fazer o ErrandReposity().delete retornar difirente de 0 dai mockei o resultado 1 para o teste passar, mas gostaria de tirar esta duvida!
-
-    jest.spyOn(ErrandReposity.prototype, "delete").mockResolvedValue(1);
+    await createErrand(errand);
 
     const result = await supertest(sut)
-      .delete(`/users/${user.idUser}/errands/${errand.idErrands}`)
-      .send();
+      .put(`/users/${user.idUser}/errands/${errand.idErrands}`)
+      .send({ title: "any_title", description: "any_description" });
 
     expect(result).toBeDefined();
     expect(result.status).toBe(201);
     expect(result.body.ok).toBe(true);
     expect(result).toHaveProperty("body.ok");
-    expect(result.body.message).toEqual("Errand successfully deleted");
+    expect(result.body.message).toEqual("Errand updated successfully");
+  });
+
+  test("Deve retornar ok:true code:201 caso recado alterado com sucesso com somente title informado", async () => {
+    await createUser(user);
+
+    await createErrand(errand);
+
+    const result = await supertest(sut)
+      .put(`/users/${user.idUser}/errands/${errand.idErrands}`)
+      .send({ title: "any_title" });
+
+    expect(result).toBeDefined();
+    expect(result.status).toBe(201);
+    expect(result.body.ok).toBe(true);
+    expect(result).toHaveProperty("body.ok");
+    expect(result.body.message).toEqual("Errand updated successfully");
+  });
+
+  test("Deve retornar ok:true code:201 caso recado alterado com sucesso com somente description informado", async () => {
+    await createUser(user);
+
+    await createErrand(errand);
+
+    const result = await supertest(sut)
+      .put(`/users/${user.idUser}/errands/${errand.idErrands}`)
+      .send({ description: "any_description" });
+
+    expect(result).toBeDefined();
+    expect(result.status).toBe(201);
+    expect(result.body.ok).toBe(true);
+    expect(result).toHaveProperty("body.ok");
+    expect(result.body.message).toEqual("Errand updated successfully");
   });
 });

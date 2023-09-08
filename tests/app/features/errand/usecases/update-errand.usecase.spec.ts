@@ -67,7 +67,55 @@ describe("UpdateErrandUsecase", () => {
     expect(result.code).toBe(404);
     expect(result.ok).toBe(false);
     expect(result).not.toHaveProperty("data");
-    expect(result.message).toEqual("Recado not found");
+    expect(result.message).toEqual("Errand not found");
+  });
+
+  test("Deve retornar ok:true e code:201 quando não enviado title e enviado description", async () => {
+    const sut = createSut();
+
+    jest.spyOn(UserRepository.prototype, "getById").mockResolvedValue(mockUser);
+    jest
+      .spyOn(ErrandReposity.prototype, "getByIdErrand")
+      .mockResolvedValue(mockErrand);
+    jest.spyOn(ErrandReposity.prototype, "update").mockResolvedValue();
+    jest.spyOn(CacheRepository.prototype, "delete").mockResolvedValue();
+
+    const result = await sut.execute({
+      iduser: mockUser.idUser,
+      iderrands: mockErrand.idErrands,
+      // title: "any_title",
+      description: "any_description",
+    });
+
+    expect(result).toBeDefined();
+    expect(result.code).toBe(201);
+    expect(result.ok).toBe(true);
+    expect(result).toHaveProperty("data");
+    expect(result.message).toEqual("Errand updated successfully");
+  });
+
+  test("Deve retornar ok:true e code:201 quando enviado title e não enviado description", async () => {
+    const sut = createSut();
+
+    jest.spyOn(UserRepository.prototype, "getById").mockResolvedValue(mockUser);
+    jest
+      .spyOn(ErrandReposity.prototype, "getByIdErrand")
+      .mockResolvedValue(mockErrand);
+    jest.spyOn(ErrandReposity.prototype, "update").mockResolvedValue();
+    jest.spyOn(CacheRepository.prototype, "delete").mockResolvedValue();
+
+    const result = await sut.execute({
+      iduser: mockUser.idUser,
+      iderrands: mockErrand.idErrands,
+      title: "any_title",
+      // description: "any_description",
+    });
+
+    expect(result).toBeDefined();
+    expect(result.code).toBe(201);
+    expect(result.ok).toBe(true);
+    expect(result).toHaveProperty("data");
+    expect(result.message).toEqual("Errand updated successfully");
   });
 
   test("Deve retornar ok:true e code:201 quando enviado title e description", async () => {
@@ -91,9 +139,10 @@ describe("UpdateErrandUsecase", () => {
     expect(result.code).toBe(201);
     expect(result.ok).toBe(true);
     expect(result).toHaveProperty("data");
-    expect(result.message).toEqual("Recado alterado com sucesso!");
+    expect(result.message).toEqual("Errand updated successfully");
   });
 
+  //colocar resposta personalizado quando o usuario não envia nem title nem description
   test("Deve retornar ok:true e code:201 quando não enviado title e description", async () => {
     const sut = createSut();
 
@@ -113,6 +162,6 @@ describe("UpdateErrandUsecase", () => {
     expect(result.code).toBe(201);
     expect(result.ok).toBe(true);
     expect(result).toHaveProperty("data");
-    expect(result.message).toEqual("Recado alterado com sucesso!");
+    expect(result.message).toEqual("Errand updated successfully");
   });
 });
