@@ -78,9 +78,6 @@ describe("testando criação de usuario", () => {
   });
 
   test("Deve retornar ok:true code:201 caso usuário cadastrado com sucesso", async () => {
-    // const user = new User("any_email", "any_password");
-    // await createUser(user);
-
     const result = await supertest(sut)
       .post("/users")
       .send({ email: "any_email", password: "any_password" });
@@ -90,5 +87,17 @@ describe("testando criação de usuario", () => {
     expect(result.body.ok).toBe(true);
     expect(result).toHaveProperty("body.ok");
     expect(result.body.message).toEqual("Usuario criado com sucesso!");
+  });
+
+  test("Deve retornar code:500 caso ocorra erro no servido para criar usuario", async () => {
+    jest.spyOn(UserRepository.prototype, "create").mockImplementation(() => {
+      throw new Error();
+    });
+
+    const result = await supertest(sut)
+      .post("/users")
+      .send({ email: "any_user", password: "any_password" });
+
+    expect(result.status).toBe(500);
   });
 });

@@ -29,14 +29,15 @@ describe("CreateUserUsecase", () => {
     return sut;
   };
 
-  const mockUser = new User("any_email", "any_senha");
-
+  // const mockUser = new User("any_email", "any_senha");
+  const mockUser = () => {
+    return new User("any_email", "any_senha");
+  };
   test("Deve retorna ok:false code:400 quando email já existe", async () => {
     const sut = createSut();
+    const user = mockUser();
 
-    jest
-      .spyOn(UserRepository.prototype, "getByEmail")
-      .mockResolvedValue(mockUser);
+    jest.spyOn(UserRepository.prototype, "getByEmail").mockResolvedValue(user);
 
     const result = await sut.execute({
       email: "any_email",
@@ -52,12 +53,13 @@ describe("CreateUserUsecase", () => {
 
   test("Deve retorna ok:true code:201 quando usuario for criado com sucesso", async () => {
     const sut = createSut();
+    const user = mockUser();
 
     jest
       .spyOn(UserRepository.prototype, "getByEmail")
       .mockResolvedValue(undefined);
 
-    jest.spyOn(UserRepository.prototype, "create").mockResolvedValue(mockUser);
+    jest.spyOn(UserRepository.prototype, "create").mockResolvedValue(user);
 
     const result = await sut.execute({
       email: "any_email",

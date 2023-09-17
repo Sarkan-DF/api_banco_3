@@ -70,6 +70,26 @@ describe("LoginUserUsecase", () => {
     expect(result.message).toEqual("Email ou senha invalido: não enviado!");
   });
 
+  // Verificar se email está correto;
+  test("Deve retornar ok:false e code:400 caso email esteja incorreto", async () => {
+    const sut = createSut();
+
+    jest
+      .spyOn(UserRepository.prototype, "getByEmail")
+      .mockResolvedValue(new User("any_email_diferente", "any_senha"));
+
+    const result = await sut.execute({
+      email: "any_email",
+      password: "any_senha",
+    });
+
+    expect(result).toBeDefined();
+    expect(result.code).toBe(400);
+    expect(result.ok).toBe(false);
+    expect(result).not.toHaveProperty("data");
+    expect(result.message).toEqual("Email ou senha invalido: incorretos!");
+  });
+
   // Verificar se senha está correta;
   test("Deve retornar ok:false e code:400 caso senha esteja incorreta", async () => {
     const sut = createSut();

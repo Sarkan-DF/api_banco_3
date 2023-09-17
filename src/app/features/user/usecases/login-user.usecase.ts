@@ -23,6 +23,10 @@ export class LoginUserUsecase implements Usecase {
       return UsecaseResponse.invalidField("Email ou senha", "incorretos!");
     }
 
+    if (existeByEmail.email != params.email) {
+      return UsecaseResponse.invalidField("Email ou senha", "incorretos!");
+    }
+
     const result = { idUser: existeByEmail.idUser, email: existeByEmail.email };
 
     return {

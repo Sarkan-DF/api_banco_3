@@ -48,7 +48,6 @@ describe("testando listagem de usuario", () => {
     expect(result.status).toBe(201);
     expect(result.body.ok).toBe(true);
     expect(result).toHaveProperty("body.ok");
-    // expect(result).toHaveProperty("data");
     expect(result.body.message).toEqual(
       "Usuario(s) listado(s) com sucesso! (cache)"
     );
@@ -67,5 +66,17 @@ describe("testando listagem de usuario", () => {
     // expect(result).toHaveProperty("data");
     expect(result.body.message).toEqual("Usuario(s) listado(s) com sucesso!");
     console.log(result);
+  });
+
+  test("Deve retornar code:500 caso ocorra erro no servido para listar user", async () => {
+    // const user = new User("any_username", "12345");
+
+    jest.spyOn(UserRepository.prototype, "list").mockImplementation(() => {
+      throw new Error();
+    });
+
+    const result = await supertest(sut).get("/users").send();
+
+    expect(result.status).toBe(500);
   });
 });
